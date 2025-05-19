@@ -1,9 +1,7 @@
 "use client"
 import React from 'react'
-import { useState } from 'react'
 
-const Header = () => {
- const [darkstate, setDarkState] = useState(false)
+const Header = ( {darkstate, setDarkState} ) => {
  const toggleDarkMode = () => {
    setDarkState(!darkstate)
    if (darkstate) {
@@ -13,13 +11,13 @@ const Header = () => {
      document.documentElement.classList.add('dark')
      document.documentElement.classList.remove('light')
    }
-   console.log(darkstate)
-   console.log(document.documentElement.classList)
+  //  console.log(darkstate)
+  //  console.log(document.documentElement.classList)
  }
 
   return (
-    <div style={{  color: 'var(--text)' }}>
-        <div className="flex justify-between py-7 px-15" >
+    <div style={{  color: 'var(--text)' }} >
+        <div className="flex justify-between py-5 px-15" >
           {darkstate ? 
             <div className='text-2xl md:text-3xl font-extrabold  
               bg-gradient-to-r from-blue-800 via-blue-600 to-blue-400 
@@ -28,9 +26,9 @@ const Header = () => {
               WEEZYS BLOG
            </div> :
            <div className='text-2xl md:text-3xl font-extrabold  
-  bg-gradient-to-r from-indigo-700 via-blue-500 to-cyan-400 
-  text-transparent bg-clip-text tracking-wide drop-shadow-lg
-  hover:bg-gradient-to-br hover:from-cyan-50 hover:to-blue-100'>
+            bg-gradient-to-r from-indigo-700 via-blue-500 to-cyan-400 
+            text-transparent bg-clip-text tracking-wide drop-shadow-lg
+            hover:bg-gradient-to-br hover:from-cyan-50 hover:to-blue-100'>
               WEEZYS BLOG
             </div>
           }
@@ -40,7 +38,6 @@ const Header = () => {
               <li className='px-4'>Blog</li>
               <li className='px-4'>Projects</li>
               <li className='px-4'>About</li>
-              <li className='px-4'>Newsletter</li>
             </ul>
             <button>
               <img src={ darkstate ? '/sun.png' : '/moon.png'} alt="Ghost" onClick={toggleDarkMode}/>

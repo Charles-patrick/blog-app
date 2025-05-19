@@ -2,7 +2,7 @@ export const blogPosts = [
   { 
     id: 1, 
     author: "Alex Whitner", 
-    date: "1 Jan 2023", 
+    date: "1 Jan 2025", 
     title: "Bill Walsh leadership lessons", 
     content: "Transforming teams through adaptive leadership strategies and cultural evolution.",
     image: "https://picsum.photos/seed/2/800/600"
