@@ -1,13 +1,34 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
-import { blogPosts } from '@/app/layout/Blogtext'
+// import { blogPosts } from '@/app/layout/Blogtext'
+import { useDarkMode } from './DarkModeContext'
+import Link from 'next/link'
+import axios from 'axios'
 
-function Home({ darkstate , setDarkState} ) {
-    console.log(darkstate)
+function Home() {
+  const { darkstate, setDarkState } = useDarkMode();
+  const [ showFilter , setShowFilter ] = useState(false)
+  const [blogPosts, setBlogPost] = useState([])
+
+  // console.log("Blogpost is", blogPosts)
+
+  useEffect(() => {
+    const fetchPost = async () => {  
+      await axios.get('https://my.api.mockaroo.com/users.json?key=5233b6a0')
+      .then((res) => {
+        setBlogPost(res.data)
+      })
+      .catch((error) => {
+        console.log("Something went wrong", error)
+      })
+    }
+    fetchPost()
+  }, [])
 
   //search and filter
   const [sortByRecent, setSortByRecent] = useState(false)
+  const [sortByOldest, setSortByOldest] = useState(false)
   const [ searchQuery, setSearchQuery ] = useState('') 
   const  keys  = ['title', 'author', 'content']
   const search = (posts) => {
@@ -31,12 +52,29 @@ function Home({ darkstate , setDarkState} ) {
   const sortedPosts = [...filteredPosts].sort((a, b) => {
     const dateA = parseDate(a.date)
     const dateB = parseDate(b.date)
-    return sortByRecent ? dateB - dateA : 0
+    if (sortByRecent) return dateB - dateA
+    if (sortByOldest) return dateA - dateB
+    return 0
   })
+  const Newestfilter = () => {
+    setSortByRecent(!sortByRecent)
+    setSortByOldest(false)
+    setShowFilter(false)
+    setCurrentPage(1)
+  }
+
+  const Oldestfilter = () => {
+    setSortByOldest(!sortByOldest)
+    setSortByRecent(false)
+    setShowFilter(false)
+    setCurrentPage(1)
+
+  }
+
 
   // Paginate posts
   const [currentPage, setCurrentPage] = useState(1)
-  const postsPerPage = 9
+  const postsPerPage = 8
   const totalPages = Math.ceil(sortedPosts.length / postsPerPage)
   const indexOfLastPost = currentPage * postsPerPage
   const indexOfFirstPost = indexOfLastPost - postsPerPage
@@ -53,40 +91,54 @@ function Home({ darkstate , setDarkState} ) {
     setCurrentPage(newPage)
   }
 
+
+
   return (
-    <div className=" px-15 mx-auto p-4">
+    <div className='homebody mx-auto'>
+      <div className=''>
+            <div className='text-center  font-bold text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl border-b  pt-3 pb-5' style={{ borderColor: "var(--border-line)" ,color: 'var(--text)'}} > THE BLOG </div>
+      </div>
       {/* Blog Header */}
-      <div className='flex justify-between  items-center'>
+      <div className='flex justify-between  items-center mt-[20px]'>
         <div>
-          <h1 className="text-2xl font-bold mb-4" style={{ color: "var(--text)"}}>All Blog Posts</h1>
+          <h1 className="font-bold mb-4 text-2xl  " style={{ color: "var(--text)"}}>Blog Posts</h1>
         </div>
         <div className='flex items-center justify-center'>
           <input
             type="text"
             placeholder="Search posts..."
-            className="w-full p-2 mb-6 border rounded-md"
+            className="w-[140px] sm:w-[300px] p-2 mb-6 border rounded-md"
             style={{ borderColor: 'var(--text)' , color: 'var(--text)' }}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button style={{ marginTop: '-25px' }} onClick={() => setSortByRecent(!sortByRecent)}>
-            <img src={ darkstate ? '/moon.png' : '/filter-light.png'} alt='filter' className='cursor-pointer w-10 h-10 font-thin'  />                  
-          </button>
+            <div className='relative'>
+                <button  style={{ marginTop: '-25px' }} onClick={() => setShowFilter(!showFilter)} >
+                <img src={ darkstate ? '/filter-dark.png' : '/filter-light.png'} alt='filter' className='cursor-pointer w-10 h-10 font-thin'  />                  
+              </button>
+              <div className={` ${showFilter ? '' : 'hidden'} absolute bg-white shadow-md rounded-md p-4 mt-2 right-0`} style={{ color: "var(--text)" , backgroundColor: 'var(--bg)'}} >
+                <ul className='w-30'>
+                  <li><button className='px-0 py-1 cursor-pointer' onClick={Newestfilter}>Filter by newest </button></li>
+                  <li><button className='px-0 py-1 cursor-pointer' onClick={Oldestfilter}>Filter by oldest </button></li>
+                  <li><button className='px-0 py-1 cursor-pointer' >Filter by popular </button></li>
+                </ul>
+              </div>
+            </div>
         </div>
       </div>
       {/* Blog Posts */}
-      <div className=" grid  md:grid-cols-3 sm:grid-cols-2 s:grid-cols-1 gap-6  ">
+      <div className=" grid  md:grid-cols-4 sm:grid-cols-2 s:grid-cols-1 gap-6 ">
         {currentPosts.length > 0 ? 
         (
           currentPosts.map(post => (
-          <article key={post.id} className=" px-0 py-0 shadow-md rounded-md">
-            <button className="text-left w-full rounded-md pb-6 ">
+          <article key={post.id} className=" px-0 py-0 shadow-md rounded-md ">
+            <Link href={`/${post.id}`} className="text-left w-full rounded-md pb-6 transition-all duration-300 hover:scale-[1.02] ">
                 <img src={post.image} alt={post.title} className="w-full h-48 object-cover rounded-tl-md rounded-tr-md" />
                 <div className='pl-2'>
                     <p style={{ color: "var(--blog-names)"}} className='pt-3 pb-1'>{post.author} . {post.date}</p>
                     <h2 className="text-xl font-bold pt-2 pb-3" style={{ color: "var(--text)"}} >{post.title}</h2>
                     <p className="text-gray-600 pt-1 pb-5" >{post.content}</p>
                 </div>
-            </button>
+            </Link >
           </article>
         ))
         ) : (

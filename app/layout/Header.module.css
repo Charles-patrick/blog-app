@@ -1,0 +1,21 @@
+.navdiv{
+  padding: 12px 60px;
+}
+.navright {
+  display: flex ;
+}
+.hamburger{
+  display: none;
+}
+
+@media (max-width: 639px) {
+  .navdiv{
+    padding: 10px 20px;
+  }
+  .navright {
+    display: none ;
+  }
+  .hamburger{
+    display: block;
+  }
+}

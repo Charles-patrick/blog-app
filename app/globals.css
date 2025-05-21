@@ -7,6 +7,7 @@
   --blog-content: #667085;
   --blog-names: #6941C6;
   --pag-color: #ffffff;
+  --hoverbtn: #ede9fe  ;
 }
 
 .dark {
@@ -16,10 +17,24 @@
   --blog-content: #C0C5D0;
   --blog-names: #6941C6;
   --pag-color: #090d1f;
-
+  --hoverbtn: #312e81  ;
 }
 
 body {
-  margin: 0;
   background: var(--bg);
+  max-width: 1200px;
+  margin: auto;
+}
+.homebody{
+  padding
+  : 0px 60px;
+}
+@media (max-width: 639px) {
+  .homebody{
+    padding
+    : 0px 20px;
+  }
+}
+.hoverbtn:hover {
+  background-color: var(--hoverbtn);
 }
