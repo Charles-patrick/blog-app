@@ -2,8 +2,10 @@
 import React from 'react'
 import { useState } from 'react'
 import styles from './Header.module.css'
+import Link from 'next/link'
 
 const Header = ( {darkstate, setDarkState} ) => {
+  const [ isLoggedIn , setIsLoggedin ] = useState(false)
  const toggleDarkMode = () => {
    setDarkState(!darkstate)
    if (darkstate) {
@@ -22,23 +24,28 @@ const Header = ( {darkstate, setDarkState} ) => {
     <div style={{ backgroundColor: 'var(--bg)' , color: 'var(--text)' }} className='fixed top-0 w-full z-50 max-w-[1200px]' >
         <div className={`${styles.navdiv} z-100 flex justify-between align-center ` }>
           {darkstate ? 
-            <button className='overflow-hidden align-center text-2xl md:text-3xl font-extrabold  
+            <Link href='/' className='overflow-hidden align-center text-2xl md:text-3xl font-extrabold  
               bg-gradient-to-r from-blue-800 via-blue-600 to-blue-400 
               text-transparent bg-clip-text tracking-wide drop-shadow-lg
               hover:bg-gradient-to-br hover:from-blue-50 hover:via-blue-100 hover:to-white'>
               MY BLOG
-           </button> :
-           <button className=' align-center text-2xl md:text-3xl font-extrabold  
+           </Link> :
+           <Link  href='/' className=' align-center text-2xl md:text-3xl font-extrabold  
             bg-gradient-to-r from-indigo-700 via-blue-500 to-cyan-400 
             text-transparent bg-clip-text tracking-wide drop-shadow-lg
             hover:bg-gradient-to-br hover:from-cyan-50 hover:to-blue-100'>
               MY BLOG
-            </button>}
+            </Link>}
           {/* DESKTOP VIEW NAVBAR RIGHT*/}
           <div className={`${styles.navright} `}>
             <ul className='flex align-center justify-center items-center'>
-              <li className='px-4'><button className='cursor-pointer'>Blog</button></li>
-                <li className='px-4'><button className='cursor-pointer'>Projects</button></li>
+              <li className='px-4'><Link href='/' className='cursor-pointer'>Blog</Link ></li>
+              { !isLoggedIn ? (
+                 <li className='px-4'><Link href='/login' className='cursor-pointer'>Login</Link></li>
+              ) : (
+                 <li className='px-4'><Link href='/login' className='cursor-pointer'>Log Out</Link></li>
+              ) }
+               
                 <li className='px-4'><button className='cursor-pointer'>About</button></li>
             </ul>
             <button>
@@ -59,9 +66,9 @@ const Header = ( {darkstate, setDarkState} ) => {
             {isOpen && 
             <div className='fixed top-[56px] left-0 w-[100%] h-[100%] z-10' style={{ backgroundColor: 'var(--bg)' , color: 'var(--text)' }} >
               <ul className='flex flex-col '>
-                <li className='px-7 py-1'><button className='cursor-pointer rounded-md text-left px-3 w-[100%] py-2 hoverbtn'>Projects</button></li>
-                <li className='px-7 py-1' ><button className='cursor-pointer rounded-md text-left px-3 w-[100%] py-2 hoverbtn'>Blog</button></li>
-                <li className='px-7 py-1'><button className='cursor-pointer rounded-md text-left px-3 w-[100%] py-2 hoverbtn'>About</button></li>
+                <li className='px-7 py-1' ><Link href='/' className='cursor-pointer rounded-md text-left px-3 block w-full py-2 hoverbtn'>Blog</Link></li>
+                <li className='px-7 py-1'><Link href='/login' className='cursor-pointer rounded-md text-left px-3  block w-full py-2 hoverbtn'>Login</Link></li>
+                <li className='px-7 py-1'><button className='cursor-pointer rounded-md text-left px-3 w-full py-2 hoverbtn'>About</button></li>
               </ul>
               <div className='px-6 py-2'>
                 

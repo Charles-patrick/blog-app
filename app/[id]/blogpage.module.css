@@ -1,0 +1,8 @@
+.blogbody{
+    padding: 10px 60px;
+}
+@media (max-width: 639px) {
+  .blogbody{
+    padding: 10px 20px;
+  }
+}

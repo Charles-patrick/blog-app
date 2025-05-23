@@ -2,29 +2,38 @@
 import { useEffect, useState } from 'react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 // import { blogPosts } from '@/app/layout/Blogtext'
-import { useDarkMode } from './DarkModeContext'
+import { useDarkMode } from './contexts/DarkModeContext'
 import Link from 'next/link'
 import axios from 'axios'
+import MockData from '@/app/text'
+import { useAuth } from './contexts/UserAuthContext'
 
 function Home() {
   const { darkstate, setDarkState } = useDarkMode();
   const [ showFilter , setShowFilter ] = useState(false)
   const [blogPosts, setBlogPost] = useState([])
+  const [ isLoading , setIsLoading] = useState(false)
+  const { isLoggedIn , login , logout } = useAuth()
 
-  // console.log("Blogpost is", blogPosts)
 
-  useEffect(() => {
-    const fetchPost = async () => {  
-      await axios.get('https://my.api.mockaroo.com/users.json?key=5233b6a0')
-      .then((res) => {
-        setBlogPost(res.data)
-      })
-      .catch((error) => {
-        console.log("Something went wrong", error)
-      })
-    }
-    fetchPost()
-  }, [])
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   const fetchPost = async () => {  
+  //     await axios.get('https://my.api.mockaroo.com/users.json?key=5233b6a0')
+  //     .then((res) => {
+  //       setBlogPost(res.data)
+  //     })
+  //     .catch((error) => {
+  //     console.error("API Error:", error.response?.data || error.message);
+  //     // Show user-friendly error message
+  //     alert('Failed to load posts. Please try again later.');
+  //     })
+  //     .finally(() =>
+  //       setIsLoading(false)
+  //     )
+  //   }
+  //   fetchPost()
+  // }, [])
 
   //search and filter
   const [sortByRecent, setSortByRecent] = useState(false)
@@ -39,13 +48,9 @@ function Home() {
 
   // Parse date strings into Date objects for comparison
   const parseDate = (dateStr) => {
-    const [day, monthAbbr, year] = dateStr.split(' ')
-    const months = {
-      Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
-      Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11
-    }
-    return new Date(year, months[monthAbbr], day)
-  }
+  const [month, day, year] = dateStr.split('/').map(Number);
+  return new Date(year, month - 1, day);
+};
 
   const filteredPosts = search(blogPosts)
   // Sort posts based on state
@@ -126,35 +131,57 @@ function Home() {
         </div>
       </div>
       {/* Blog Posts */}
-      <div className=" grid  md:grid-cols-4 sm:grid-cols-2 s:grid-cols-1 gap-6 ">
-        {currentPosts.length > 0 ? 
-        (
-          currentPosts.map(post => (
-          <article key={post.id} className=" px-0 py-0 shadow-md rounded-md ">
-            <Link href={`/${post.id}`} className="text-left w-full rounded-md pb-6 transition-all duration-300 hover:scale-[1.02] ">
-                <img src={post.image} alt={post.title} className="w-full h-48 object-cover rounded-tl-md rounded-tr-md" />
-                <div className='pl-2'>
-                    <p style={{ color: "var(--blog-names)"}} className='pt-3 pb-1'>{post.author} . {post.date}</p>
-                    <h2 className="text-xl font-bold pt-2 pb-3" style={{ color: "var(--text)"}} >{post.title}</h2>
-                    <p className="text-gray-600 pt-1 pb-5" >{post.content}</p>
-                </div>
-            </Link >
-          </article>
-        ))
-        ) : (
-          <div className="col-span-full text-center py-12">
-            <p 
-              className="text-xl font-medium"
-              style={{ color: "var(--text)" }}
-            > No posts found matching your criteria</p>
-            <p 
-              className="mt-2 text-gray-500"
-              style={{ color: "var(--blog-names)" }}
-            >Try adjusting your search or filters</p>
-          </div>
-        )}
-        
+      {isLoading ? (
+      <div className="flex justify-center items-center" style={{ minHeight: "400px", width: '100%' }}>
+        <div className="flex justify-center items-center w-full" style={{ maxHeight: "300px" }}>
+          {darkstate ? (
+            <img 
+              src="/456.svg" 
+              alt="Loading..."
+              className="mx-auto my-auto"
+            />
+          ) : (
+            <img 
+              src="/123.svg" 
+              alt="Loading..."
+              className="mx-auto my-auto"
+            />
+          )}   
+        </div> 
       </div>
+    ) : (searchQuery && currentPosts.length > 0 ? (
+      <div className="flex justify-center items-center" style={{ minHeight: "400px", width: '100%' }}>
+        <span className="text-lg font-semibold" style={{ color: "var(--text)" }}>No searches found.</span>
+      </div>
+    ) : (
+      <div className="grid md:grid-cols-4 sm:grid-cols-2 s:grid-cols-1 gap-6">
+        {currentPosts.map(post => (
+          <article key={post.id} className="px-0 py-0 shadow-md rounded-md">
+            <Link href={`/${post.id}`} className="text-left w-full rounded-md pb-6 transition-all duration-300 hover:scale-[1.02] ">
+              <img src={post.image} alt={post.title} className="w-full h-48 object-cover rounded-tl-md rounded-tr-md" />
+              <div className='pl-2'>
+                <p style={{ color: "var(--blog-names)"}} className='pt-3 pb-1'>{post.author} . {post.date}</p>
+                <h2 className="text-xl font-bold pt-2 pb-3" style={{ color: "var(--text)"}} >{post.title}</h2>
+                <p className="text-gray-600 pt-1 pb-5" >{post.content}</p>
+              </div>
+            </Link>
+          </article>
+        ))}
+        {MockData.map( post => (
+          <article key={post.id} className="px-0 py-0 shadow-md rounded-md">
+            <Link href={`/${post.id}`} className="text-left w-full rounded-md pb-6 transition-all duration-300 hover:scale-[1.02] ">
+              <img src={post.image} alt={post.title} className="w-full h-48 object-cover rounded-tl-md rounded-tr-md" />
+              <div className='pl-2'>
+                <p style={{ color: "var(--blog-names)"}} className='pt-3 pb-1'>{post.author} . {post.date}</p>
+                <h2 className="text-xl font-bold pt-2 pb-3" style={{ color: "var(--text)"}} >{post.title}</h2>
+                <p className="text-gray-600 pt-1 pb-5" >{post.content}</p>
+              </div>
+            </Link>
+          </article>
+        ))}
+      </div>
+    ))}
+    
 
       {/* Pagination */}
       <div className="mt-8 flex items-center justify-center space-x-2">
