@@ -1,18 +1,23 @@
 'use client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
-
+import React, { useEffect, useState } from 'react'
+import Input from '@/app/components/Input'
+import { useAuth} from '@/app/contexts/UserAuthContext'
 
 const Page = () => {
+  const { isloggedin , login } = useAuth()
   const [ username , setUsername ] = useState('')
   const [ password , setPassword ] = useState('')
   const router = useRouter()
+
   const handleSubmit = (e) => {
     e.preventDefault()
     if( username && password) {
-      localStorage.setItem('isLoggedIn', 'true')
+      login(username)
       router.push('/createblog')
+  }else {
+      alert("Please fill in all fields")
   }}
   return (
     <>
@@ -22,33 +27,11 @@ const Page = () => {
           <form className='flex flex-col' onSubmit={handleSubmit}>
             <label className="pt-5 pb-5 w-full">
                 Username:
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter your Username"
-                  className="rounded-md px-3 py-2 mb-4 border border-solid focus:outline-none transition-colors w-full"
-                  style={{
-                    borderColor: "var(--border-line)",
-                    backgroundColor: "var(--bg)",
-                    color: "var(--text)"
-                  }}
-                />
+              <Input type="text" placeholder="Enter your Username" value={username} onChange={(e) => setUsername(e.target.value)} />
               </label>
               <label className="pb-1 w-full inline-block">
                 Password:
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your Password"
-                  className="rounded-md px-3 py-2 mb-4 border border-solid focus:outline-none transition-colors w-full"
-                  style={{
-                    borderColor: "var(--border-line)",
-                    backgroundColor: "var(--bg)",
-                    color: "var(--text)"
-                  }}
-                />
+                <Input type="password" placeholder="Enter your Password" value={password} onChange={(e) => setPassword(e.target.value)} />
               </label>
             <p className='pb-3 italic'>Dont have an account yet ? <Link href='/signup'>Sign Up</Link></p>
             <input  type='submit' className='p-2 rounded md' style={{ background: "var(--text)" , color: "var(--bg)"}} />

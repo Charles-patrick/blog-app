@@ -1,6 +1,18 @@
-import { createContext, useContext } from "react";
-export const DarkModeContext = createContext();
+// contexts/DarkModeContext.js
+'use client'
+import { createContext, useContext, useState } from 'react'
 
-export function useDarkMode() {
-  return useContext(DarkModeContext);
+const DarkModeContext = createContext()
+
+export function DarkModeProvider({ children }) {
+  const [darkstate, setDarkState] = useState(true) 
+
+  return (
+    <DarkModeContext.Provider value={{ darkstate, setDarkState }}>
+      {children}
+    </DarkModeContext.Provider>
+  )
 }
+
+// Fix the hook to return properly
+export const useDarkMode = () => useContext(DarkModeContext)
