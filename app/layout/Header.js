@@ -6,8 +6,12 @@ import Link from 'next/link'
 import { useDarkMode } from '../contexts/DarkModeContext'
 import { useAuth } from '../contexts/UserAuthContext'
 import { useRouter , usePathname } from 'next/navigation'
+import { signIn, signOut, useSession } from 'next-auth/react'
+// import { login, logout } from '@/lib/actions/auth'
+
 
 const Header = () => {
+  const {data : session, status} = useSession()
   const router = useRouter()
   const pathname = usePathname()
    const { darkstate, setDarkState } = useDarkMode();
@@ -24,21 +28,31 @@ const Header = () => {
     }
   }, [darkstate])
 
+      const navAuthBtn = !session ? (
+          <li className={`px-4 mx-2  'border-b-1 border-blue-500' : ''}`}>
+            <button onClick={() => (  router.push('/'))} className={`cursor-pointer`}>Login</button>
+          </li>
+      ) : (
+          <li className={`px-4 mx-2 'border-b-1 border-blue-500' : ''}`}> 
+            <button onClick={() =>  (signOut())}>Log Out </button>
+          </li>
+      ) 
 
+      const navAuthBtnMobile = !session ? (
+                 <li className={`px-4 mx-2  'border-b-1 border-blue-500' : ''}`}>
+                    <button onClick={() => (router.push('/'))} className={`cursor-pointer`}>Login</button>
+                  </li>
+              ) : (
+                 <li className={`px-4 mx-2 'border-b-1 border-blue-500' : ''}`}>
+                   <button onClick={() =>  (signOut(),  router.push('/'))}>   Sign Out </button>
+                 </li>
+              )
+ 
  const toggleDarkMode = () => {
    setDarkState(!darkstate)
-   if (darkstate) {
-     document.documentElement.classList.remove('dark')
-     document.documentElement.classList.add('light')
-   } else {
-     document.documentElement.classList.add('dark')
-     document.documentElement.classList.remove('light')
-   }
  }
-//  const[ showModal , setShowModal ] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
-  console.log( 'current route is', pathname )
 
   return (
     <div style={{ backgroundColor: 'var(--bg)' , color: 'var(--text)' }} className='fixed top-0 w-full z-50 max-w-[1200px]' >
@@ -60,13 +74,10 @@ const Header = () => {
           <div className={`${styles.navright} `}>
             <ul className='flex align-center justify-center items-center'>
               <li className={`px-4 mx-2 ${pathname === '/' ? 'border-b-1 border-blue-500' : ''}`}><button onClick={() => router.push('/')}  className={`cursor-pointer`}>Blog</button ></li>
-              { !isLoggedIn ? (
-                 <li className={`px-4 mx-2 ${pathname === '/login' ? 'border-b-1 border-blue-500' : ''}`}><button onClick={() => router.push('/login')}  className={`cursor-pointer`}>Login</button></li>
-              ) : (
-                 <li className={`px-4 mx-2 ${pathname === '/logout' ? 'border-b-1 border-blue-500' : ''}`}><button onClick={() => router.push('/logout')}  className={'cursor-pointer'}>Log Out</button></li>
-              ) }
+              {/* <li><Authbutton /></li> */}
+              { navAuthBtnMobile } 
             </ul>
-            <button>
+            <button> 
               <img src={ darkstate ? '/sun.png' : '/moon.png'} alt="Ghost" onClick={toggleDarkMode}/>
             </button> 
           </div> 
@@ -85,11 +96,7 @@ const Header = () => {
             <div className='fixed top-[56px] left-0 w-[100%] h-[100%] z-10' style={{ backgroundColor: 'var(--bg)' , color: 'var(--text)' }} >
               <ul className='flex flex-col '>
                 <li className='px-7 py-1' ><button onClick={() => { router.push('/'); setIsOpen(false); }} className='cursor-pointer rounded-md text-left px-3 block w-full py-2 hoverbtn'>Blog</button></li>
-                { !isLoggedIn ? (
-                  <li className='px-7 py-1'><button onClick={() => { router.push('/login'); setIsOpen(false); }} className='cursor-pointer rounded-md text-left px-3 block w-full py-2 hoverbtn'>Login</button></li>
-                ) : (
-                  <li className='px-7 py-1'><button onClick={() => { router.push('/logout'); setIsOpen(false); }} className='cursor-pointer rounded-md text-left px-3 block w-full py-2 hoverbtn'>Log Out</button></li>
-                )}
+                {navAuthBtn}
               </ul>
               <div className='px-6 py-2'>
                 

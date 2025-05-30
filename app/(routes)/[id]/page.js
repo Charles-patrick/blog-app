@@ -18,7 +18,7 @@ const Page = () => {
   const currentPosts = MockData
   const singlePost = blogPost.find(post => String(post.id) === String(id));
   const SingleData = MockData.find(post => String(post.id) === String(id));
-  console.log('current posts are ' , currentPosts)
+
 
     // useEffect(() => {
     //   const fetchPost = async () => {  

@@ -5,25 +5,20 @@ import MockData from '../../text'
 import Button from '@/app/components/Button'
 import Input from '@/app/components/Input'
 import { useAuth } from '../../contexts/UserAuthContext'
+import { useSession } from 'next-auth/react'
 
 export default function CreatePost() {
+  const { data: session , state } = useSession()
   const { isLoggedIn , username } = useAuth()
-  const router = useRouter()
-  // const [ username , setUsername ] = useState('')
+  
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [image , setImage ] = useState('')
-
-  // useEffect(() => {
-  //   // Check auth status on mount
-  //   const isLoggedIn = localStorage.getItem('isLoggedIn')
-  //   if(!isLoggedIn) {
-  //     router.push('/unauthorized')
-  //   }
-  // }, [])
+  const router = useRouter()
 
  const handleSubmit = (e) => {
     e.preventDefault()
+    console.log( 'current email is' , session.user.email)
     if (!title || !content) {
       alert("Title and content are required")
       return
@@ -36,15 +31,13 @@ export default function CreatePost() {
         content: content,
         ...(image && { image: image })
       }
-      MockData.push(NewPost) // Add new post to MockData
-      console.log("Post created:", NewPost)
+      MockData.push(NewPost)
       router.push('/')
     }
  }
 
   return (
    <>
-   { isLoggedIn ? (
      <div className="max-w-2xl mx-auto mt-20 p-6">
       <h1 className="text-2xl font-bold mb-6" style={{ color: "var(--text)"}}> Welcome {username} , Create New Post</h1>
       <form className="space-y-4" onSubmit={handleSubmit}>
@@ -70,14 +63,6 @@ export default function CreatePost() {
         </Button>
       </form>
     </div>
-   ) : (
-     <div className='flex justify-center items-center min-h-screen' style={{ minHeight: "90vh" }}  >
-       <div className='shadow-lg p-8 md:p-10 rounded-md ' style={{ color: 'var(--text)' , backgroundColor: 'var(--bg)' }}>
-         <h1 className='text-xl mb-5'>You need to be logged in to create a post</h1>
-         <Button onClick={() => router.push('/login')}>Login</Button>
-       </div>
-     </div>
-   )}
    </>
   )
 }
