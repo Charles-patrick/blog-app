@@ -7,7 +7,6 @@ import { SessionProvider } from "next-auth/react"
 
 export default function ClientLayout({ children }) {
   return (
-    <AuthProvider>
       <SessionProvider>
         <DarkModeProvider>
           <Header />
@@ -16,6 +15,5 @@ export default function ClientLayout({ children }) {
           </div>
         </DarkModeProvider>
       </SessionProvider>
-    </AuthProvider> 
   )
 }

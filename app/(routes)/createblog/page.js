@@ -4,12 +4,12 @@ import { useRouter } from 'next/navigation'
 import MockData from '../../text'
 import Button from '@/app/components/Button'
 import Input from '@/app/components/Input'
-import { useAuth } from '../../contexts/UserAuthContext'
+// import { useAuth } from '../../contexts/UserAuthContext'
 import { useSession } from 'next-auth/react'
 
 export default function CreatePost() {
   const { data: session , state } = useSession()
-  const { isLoggedIn , username } = useAuth()
+  // const { isLoggedIn , username } = useAuth()
   
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')

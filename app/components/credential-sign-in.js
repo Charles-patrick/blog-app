@@ -42,8 +42,7 @@ export function CredentialsSignIn() {
   return (
     <>
       <form onSubmit={handleSubmit} style={{ borderTop: "1px solid var(--border-line)" }}>
-        <div className="w-full max-w-sm text-center">
-            Login to your account      
+        <div className="w-full max-w-sm pt-3">
             <div>
               <label className='w-full' htmlFor="email">Email</label>
               <Input className='w-full'name="email" placeholder="email" type="email" required /> 

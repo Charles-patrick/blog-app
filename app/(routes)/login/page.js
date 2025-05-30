@@ -3,10 +3,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import Input from '@/app/components/Input'
-import { useAuth} from '@/app/contexts/UserAuthContext'
+// import { useAuth} from '@/app/contexts/UserAuthContext'
 
 const Page = () => {
-  const { isloggedin , login } = useAuth()
+  // const { isloggedin , login } = useAuth()
   const [ username , setUsername ] = useState('')
   const [ password , setPassword ] = useState('')
   const router = useRouter()

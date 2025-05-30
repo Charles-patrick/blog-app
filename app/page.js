@@ -23,7 +23,7 @@ export default async function Home() {
     <div style={{ color: 'var(--text)' }} >
   <div style={{ display: "grid", placeItems: "center",   minHeight: "80vh" }}className="">
     <div className=" p-6 shadow-md rounded-md ">
-      <h1 className="bold text-center">You Are Not Signed In</h1>
+      <h1 className="mb-3 text-center bold"> Login to Create Your Blog</h1>   
       <div className="mb-3"><SignInButton /></div>
       <div><CredentialsSignIn /></div>
     </div>
