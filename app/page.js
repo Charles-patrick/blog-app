@@ -20,14 +20,19 @@ export default async function Home() {
   }
 
   return (
-    <div style={{ color: 'var(--text)' }} >
-  <div style={{ display: "grid", placeItems: "center",   minHeight: "80vh" }}className="">
-    <div className=" p-6 shadow-md rounded-md ">
-      <h1 className="mb-3 text-center bold"> Login to Create Your Blog</h1>   
-      <div className="mb-3"><SignInButton /></div>
-      <div><CredentialsSignIn /></div>
+  <div style={{ color: 'var(--text)' }} >
+    <div style={{ display: "grid", placeItems: "center", minHeight: "80vh" }}>
+      <div className="p-6 shadow-md rounded-md">
+        <h1 className="mb-3 text-center bold">Login to Create Your Blog</h1>
+        <div className="mb-3"><SignInButton /></div>
+        {/* Centered "or" above the hr */}
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "-10px" }}>
+          <span className="text-center" style={{ background: "var(--bg)", padding: "0 8px" }}>or</span>
+        </div>
+        <hr />
+        <div><CredentialsSignIn /></div>
+      </div>
     </div>
   </div>
-</div>
-  );
+);
 }

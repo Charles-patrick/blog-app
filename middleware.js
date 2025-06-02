@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 // import type { NextRequest } from "next/server";
 import { auth } from "@/auth";
 
-const protectedRoutes = ["/createblog"];
+const protectedRoutes = ["/createblog" , "/[id]"];
 
 export default async function middleware(request) {
   const session = await auth();
@@ -14,7 +14,7 @@ export default async function middleware(request) {
   );
 
   if (isProtected && !session) {
-    return NextResponse.redirect(new URL("/" ,
+    return NextResponse.redirect(new URL("/unauthorized" ,
     request.url));
   } 
 

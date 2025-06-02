@@ -13,7 +13,7 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 const Header = () => {
   const {data : session, status} = useSession()
   const router = useRouter()
-  const pathname = usePathname()
+  // const pathname = usePathname()
    const { darkstate, setDarkState } = useDarkMode();
   //  const { isLoggedIn } = useAuth();
 
@@ -29,24 +29,24 @@ const Header = () => {
   }, [darkstate])
 
       const navAuthBtn = !session ? (
-          <li className={`px-4 mx-2  'border-b-1 border-blue-500' : ''}`}>
-            <button onClick={() => (  router.push('/'))} className={`cursor-pointer`}>Login</button>
+          <li className={`px-4 mx-2 `}>
+            <button onClick={() => (  router.push('/'))} >Login</button>
           </li>
       ) : (
-          <li className={`px-4 mx-2 'border-b-1 border-blue-500' : ''}`}> 
-            <button onClick={() =>  (signOut())}>Log Out </button>
+          <li className={`px-4 mx-2 `}> 
+            <button onClick={() =>  (signOut())} >Log Out </button>
           </li>
       ) 
 
       const navAuthBtnMobile = !session ? (
-                 <li className={`px-4 mx-2  'border-b-1 border-blue-500' : ''}`}>
-                    <button onClick={() => (router.push('/'))} className={`cursor-pointer`}>Login</button>
-                  </li>
-              ) : (
-                 <li className={`px-4 mx-2 'border-b-1 border-blue-500' : ''}`}>
-                   <button onClick={() =>  (signOut(),  router.push('/'))}>   Sign Out </button>
-                 </li>
-              )
+            <li className={`px-7 mx-2 '}`}>
+              <button onClick={() => (router.push('/'))} className='cursor-pointer rounded-md text-left px-3 block w-full py-2 hoverbtn'>Login</button>
+            </li>
+        ) : (
+            <li className={'px-6 mx-2'}> 
+              <button onClick={() =>  (signOut(),  router.push('/'))} className='cursor-pointer rounded-md text-left px-2 block w-full py-2 hoverbtn'>   Sign Out </button>
+            </li>
+        )
  
  const toggleDarkMode = () => {
    setDarkState(!darkstate)
@@ -62,20 +62,20 @@ const Header = () => {
               bg-gradient-to-r from-blue-800 via-blue-600 to-blue-400 
               text-transparent bg-clip-text tracking-wide drop-shadow-lg
               hover:bg-gradient-to-br hover:from-blue-50 hover:via-blue-100 hover:to-white'>
-              MY BLOG
+             BLOG
            </Link> :
            <Link  href='/' className=' align-center text-2xl md:text-3xl font-extrabold  
             bg-gradient-to-r from-indigo-700 via-blue-500 to-cyan-400 
             text-transparent bg-clip-text tracking-wide drop-shadow-lg
             hover:bg-gradient-to-br hover:from-cyan-50 hover:to-blue-100'>
-              MY BLOG
+             BLOG
             </Link>}
           {/* DESKTOP VIEW NAVBAR RIGHT*/}
           <div className={`${styles.navright} `}>
             <ul className='flex align-center justify-center items-center'>
-              <li className={`px-4 mx-2 ${pathname === '/' ? 'border-b-1 border-blue-500' : ''}`}><button onClick={() => router.push('/')}  className={`cursor-pointer`}>Blog</button ></li>
+              <li className={`px-4 mx-2 `}><button onClick={() => router.push('/')}  className={`cursor-pointer`}>Blog</button ></li>
               {/* <li><Authbutton /></li> */}
-              { navAuthBtnMobile } 
+              { navAuthBtn } 
             </ul>
             <button> 
               <img src={ darkstate ? '/sun.png' : '/moon.png'} alt="Ghost" onClick={toggleDarkMode}/>
@@ -96,7 +96,7 @@ const Header = () => {
             <div className='fixed top-[56px] left-0 w-[100%] h-[100%] z-10' style={{ backgroundColor: 'var(--bg)' , color: 'var(--text)' }} >
               <ul className='flex flex-col '>
                 <li className='px-7 py-1' ><button onClick={() => { router.push('/'); setIsOpen(false); }} className='cursor-pointer rounded-md text-left px-3 block w-full py-2 hoverbtn'>Blog</button></li>
-                {navAuthBtn}
+                {navAuthBtnMobile}
               </ul>
               <div className='px-6 py-2'>
                 

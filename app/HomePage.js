@@ -4,11 +4,12 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { useDarkMode } from './contexts/DarkModeContext'
 import Link from 'next/link'
 import MockData from '@/app/text'
-// import { useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
+import { FunnelPlus, FunnelX } from 'lucide-react'
 // import { useRouter } from 'next/navigation'
 
 export default function HomePage() {
-//   const { data: session, status} = useSession()
+  const { data: session, status} = useSession()
   const { darkstate } = useDarkMode();
   const [showFilter, setShowFilter] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -81,14 +82,24 @@ export default function HomePage() {
   return (
     <div className='homebody mx-auto'>
       <div className=''>
-        <div className='text-center font-bold text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl border-b pt-3 pb-5' style={{ borderColor: "var(--border-line)", color: 'var(--text)' }}> THE BLOG </div>
+        <div className='text-center font-bold text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl  pt-3 pb-5' > THE BLOG </div>
       </div>
       {/* Blog Header */}
+        <div>
+          <hr style={{ color: "var(--border-line)" }}/>
+          {status === "loading" ? (
+            <div><p className='pt-3 pb-3'>...</p></div>
+          ) : session?.user ? (
+            <div><p className='pt-3 pb-3'>Welcome {session.user.name ?? session.user.email} !!!</p></div>
+          ) : null}
+          <hr style={{ color: "var(--border-line)" }}/>
+        </div>
+      
       <div className='flex justify-between items-center mt-[20px]'>
         <div>
           <h1 className="font-bold mb-4 text-2xl" style={{ color: "var(--text)" }}>Blog Posts</h1>
         </div>
-        <div className='flex items-center justify-center'>
+        <div className='flex items-center justify-center gap-3'>
           <input
             type="text"
             placeholder="Search posts..."
@@ -97,8 +108,8 @@ export default function HomePage() {
             onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
           />
           <div className='relative'>
-            <button style={{ marginTop: '-25px' }} onClick={() => setShowFilter(!showFilter)} >
-              <img src={darkstate ? '/filter-dark.png' : '/filter-light.png'} alt='filter' className='cursor-pointer w-10 h-10 font-thin' />
+            <button style={{ marginTop: '-30px' }} onClick={() => setShowFilter(!showFilter)} >
+              { !showFilter ? <FunnelPlus size={32} color="var(--text)" strokeWidth={1}/> : <FunnelX size={32} color="var(--text)" strokeWidth={1}/>}
             </button>
             <div className={` ${showFilter ? '' : 'hidden'} absolute bg-white shadow-md rounded-md p-4 mt-2 right-0`} style={{ color: "var(--text)", backgroundColor: 'var(--bg)' }}>
               <ul className='w-30'>
