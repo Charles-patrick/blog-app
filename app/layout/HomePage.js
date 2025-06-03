@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
-import { useDarkMode } from './contexts/DarkModeContext'
+import { useDarkMode } from '../contexts/DarkModeContext'
 import Link from 'next/link'
 import MockData from '@/app/text'
 import { useSession } from 'next-auth/react'
