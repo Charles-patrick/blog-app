@@ -25,7 +25,6 @@ export function CredentialsSignIn() {
       const result = await signIn("credentials", {
         email,
         password,
-        redirect: false, // Must set to false to handle manually
       });
 
       if (result?.error) {
