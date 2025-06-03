@@ -7,6 +7,7 @@ import styles from './blogpage.module.css'
 import MockData from '../../text'
 import { useDarkMode } from '../../contexts/DarkModeContext'
 import Link from 'next/link'
+import Image from 'next/image'
 
 
 const Page = () => {
@@ -43,15 +44,19 @@ const Page = () => {
             <div className="flex justify-center items-center" style={{ minHeight: "400px", width: '100%' }}>
               <div className="flex justify-center items-center w-full" style={{ maxHeight: "300px" }}>
                 {darkstate ? (
-                  <img 
-                    src="/456.svg" 
-                    alt="Loading..."
+                  <Image 
+                    src='/darkloader.svg' 
+                    alt='Loading...' 
+                    width={100} 
+                    height={100} 
                     className="mx-auto my-auto"
                   />
                 ) : (
-                  <img 
-                    src="/123.svg" 
-                    alt="Loading..."
+                  <Image 
+                    src='/lightloader.svg' 
+                    alt='Loading...' 
+                    width={100} 
+                    height={100} 
                     className="mx-auto my-auto"
                   />
                 )}   
@@ -65,7 +70,8 @@ const Page = () => {
                 <p className="text-gray-600 mb-1">
                   {SingleData.author} • {SingleData.date}
                 </p>
-                {SingleData.image && <img src={SingleData.image} alt={SingleData.title} className='w-full h-60' />}  
+                {SingleData.image &&
+                <Image src={SingleData.image} alt={SingleData.title} width={100} height={100} className='w-full h-60' />}  
                 <p>{SingleData.content}</p>
                 <p>{SingleData.details}</p>
               </div>
@@ -79,7 +85,8 @@ const Page = () => {
                     .map(post => (
                       <article key={post.id} className="px-0 py-0 shadow-md rounded-md transition-transform duration-300 hover:scale-102">
                         <Link href={`/${post.id}`} className="text-left w-full rounded-md pb-6 transition-all duration-300 hover:scale-[1.02] ">
-                          {post.image && <img src={post.image} alt={post.title} className="w-full h-48 object-cover rounded-tl-md rounded-tr-md" />}
+                          {post.image && 
+                          <Image src={post.image} alt={post.title} width={100} height={100} className="w-full h-48 object-cover rounded-tl-md rounded-tr-md" />}
                           <div className='pl-2 overflow-hidden break-words'>
                             <p style={{ color: "var(--blog-names)" }} className='pt-3 pb-1'>{post.author} . {post.date}</p>
                             <h2 className="text-xl font-bold pt-2 pb-3" style={{ color: "var(--text)" }}>

@@ -127,9 +127,9 @@ export default function HomePage() {
         <div className="flex justify-center items-center" style={{ minHeight: "400px", width: '100%' }}>
           <div className="flex justify-center items-center w-full" style={{ maxHeight: "300px" }}>
             {darkstate ? (
-              <img src="/456.svg" alt="Loading..." className="mx-auto my-auto" />
+              <Image src='/darkloader.svg' alt='Loading...' width={100} height={100} className="mx-auto my-auto" />
             ) : (
-              <img src="/123.svg" alt="Loading..." className="mx-auto my-auto" />
+              <Image src='/lightloader.svg' alt='Loading...' width={100} height={100} className="mx-auto my-auto" />
             )}
           </div>
         </div>

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useDarkMode } from '../contexts/DarkModeContext'
 import { useRouter , usePathname } from 'next/navigation'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import Image from 'next/image'
 // import { login, logout } from '@/lib/actions/auth'
 
 
@@ -76,14 +77,15 @@ const Header = () => {
               { navAuthBtn } 
             </ul>
             <button> 
-              <img src={ darkstate ? '/sun.png' : '/moon.png'} alt="Ghost" onClick={toggleDarkMode}/>
+              <Image 
+              src={ darkstate ? '/sun.png' : '/moon.png'} alt="Ghost" onClick={toggleDarkMode} width={30} height={30} />
             </button> 
           </div> 
 
           {/* MOBILE VIEW NAVBAR RIGHT*/}
           <div className={`${styles.hamburger}`}>
             <button className='pr-2 transition-all duration-300 hover:scale-[1.05] '>
-              <img src={ darkstate ? '/sun.png' : '/moon.png'} className='-mt-[31px]' alt="Ghost" onClick={toggleDarkMode}/>
+              <Image src={ darkstate ? '/sun.png' : '/moon.png'} className='-mt-[35px]' alt="Ghost" onClick={toggleDarkMode} width={30} height={30} />
             </button> 
             <button className={` relative z-50 h-[100%]`} onClick={toggleMenu}> 
             <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="40px" fill="var(--text)"><path d="M120-240v-60h720v60H120Zm0-210v-60h720v60H120Zm0-210v-60h720v60H120Z"/></svg>
