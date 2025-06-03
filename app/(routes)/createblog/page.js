@@ -4,12 +4,10 @@ import { useRouter } from 'next/navigation'
 import MockData from '../../text'
 import Button from '@/app/components/Button'
 import Input from '@/app/components/Input'
-// import { useAuth } from '../../contexts/UserAuthContext'
 import { useSession } from 'next-auth/react'
 
 export default function CreatePost() {
   const { data: session , state } = useSession()
-  // const { isLoggedIn , username } = useAuth()
   
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
@@ -18,7 +16,6 @@ export default function CreatePost() {
 
  const handleSubmit = (e) => {
     e.preventDefault()
-    console.log( 'current email is' , session.user.email)
     if (!title || !content) {
       alert("Title and content are required")
       return
@@ -26,7 +23,7 @@ export default function CreatePost() {
       const NewPost ={
         id: Date.now(),
         title: title,
-        author: username,
+        author: session.user.name || 'Anonymous',
         date: new Date().toLocaleDateString(),
         content: content,
         ...(image && { image: image })
@@ -39,7 +36,7 @@ export default function CreatePost() {
   return (
    <>
      <div className="max-w-2xl mx-auto mt-20 p-6">
-      <h1 className="text-2xl font-bold mb-6" style={{ color: "var(--text)"}}> Welcome {username} , Create New Post</h1>
+      <h1 className="text-2xl font-bold mb-6" style={{ color: "var(--text)"}}> Welcome {session.user.name || session.user.email} , Create New Post</h1>
       <form className="space-y-4" onSubmit={handleSubmit}>
         <Input
           type="text"

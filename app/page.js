@@ -9,7 +9,6 @@ import HomePage from "./HomePage";
 
 export default async function Home() {
   const session = await auth();
-  console.log(session)
 
   if (session?.user) {
     return (

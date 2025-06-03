@@ -17,7 +17,6 @@ export function CredentialsSignIn() {
     const formData = new FormData(e.target);
     const email = formData.get("email");
     const password = formData.get("password");
-    console.log("formdata is ", password )
     if (!email || !password) {
         setError("Both fields are required");
         return;

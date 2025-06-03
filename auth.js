@@ -13,11 +13,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       authorize : async (credentials) => {
          const email = "chukwuebuka.o@kadickintegrated.com" 
          const password = "1234"
-         const username = "chukwuebuka"
          if ( 
             credentials.email === email && 
             credentials.password == password) { 
-            return { email , password , username }
+            return { email , password  }
          } else {
             throw new error("Invalid Credentails")
          }

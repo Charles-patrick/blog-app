@@ -2,7 +2,6 @@
 'use client'
 import Header from "@/app/layout/Header"
 import { DarkModeProvider } from "./contexts/DarkModeContext"
-import { AuthProvider } from "../app/contexts/UserAuthContext"
 import { SessionProvider } from "next-auth/react"
 
 export default function ClientLayout({ children }) {

@@ -4,7 +4,6 @@ import { useState , useEffect} from 'react'
 import styles from './Header.module.css'
 import Link from 'next/link'  
 import { useDarkMode } from '../contexts/DarkModeContext'
-// import { useAuth } from '../contexts/UserAuthContext'
 import { useRouter , usePathname } from 'next/navigation'
 import { signIn, signOut, useSession } from 'next-auth/react'
 // import { login, logout } from '@/lib/actions/auth'
@@ -15,7 +14,6 @@ const Header = () => {
   const router = useRouter()
   // const pathname = usePathname()
    const { darkstate, setDarkState } = useDarkMode();
-  //  const { isLoggedIn } = useAuth();
 
   //  darkstate value that only changes when darkstate is called 
     useEffect(() => {
