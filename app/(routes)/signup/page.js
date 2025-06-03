@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Input from '@/app/components/Input'
 import Button from '@/app/components/Button'
 
-const page = () => {
+const Page = () => {
   const router = useRouter()
   const HandleSubmit = (e) => {
     e.preventDefault()
@@ -40,4 +40,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

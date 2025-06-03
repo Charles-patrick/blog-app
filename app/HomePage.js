@@ -6,6 +6,7 @@ import Link from 'next/link'
 import MockData from '@/app/text'
 import { useSession } from 'next-auth/react'
 import { FunnelPlus, FunnelX } from 'lucide-react'
+import Image from 'next/image'
 // import { useRouter } from 'next/navigation'
 
 export default function HomePage() {
@@ -145,7 +146,18 @@ export default function HomePage() {
           {currentPosts.map(post => (
             <article key={post.id} className="px-0 py-0 shadow-md rounded-md transition-transform duration-300 hover:scale-102">
               <Link href={`/${post.id}`} className="text-left w-full rounded-md pb-6 transition-all duration-300 hover:scale-[1.02] ">
-                {post.image && <img src={post.image} alt={post.title} className="w-full h-48 object-cover rounded-tl-md rounded-tr-md" />}
+                {post.image && 
+                <div>
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  width={100}
+                  height={100}
+                  className='rounded-tl-md rounded-tr-md'
+                  style={{ width: '100%', height: '170px' }}
+                />
+                </div>
+                }
                 <div className='pl-2 overflow-hidden break-words'>
                   <p style={{ color: "var(--blog-names)" }} className='pt-3 pb-1'>{post.author} . {post.date}</p>
                   <h2 className="text-xl font-bold pt-2 pb-3" style={{ color: "var(--text)" }}>
