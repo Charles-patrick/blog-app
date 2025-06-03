@@ -3,7 +3,6 @@
 import { auth } from "@/auth";
 import Link from "next/link";
 import { SignInButton } from "./components/sign-in-button";
-import { SignOutButton } from "./components/sign-out-button";
 import { CredentialsSignIn } from "./components/credential-sign-in";
 import HomePage from "./layout/HomePage";
 
