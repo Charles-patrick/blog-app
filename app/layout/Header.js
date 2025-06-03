@@ -7,6 +7,7 @@ import { useDarkMode } from '../contexts/DarkModeContext'
 import { useRouter , usePathname } from 'next/navigation'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
+import { SignOutButton } from '../components/sign-out-button'
 // import { login, logout } from '@/lib/actions/auth'
 
 
@@ -33,18 +34,20 @@ const Header = () => {
           </li>
       ) : (
           <li className={`px-4 mx-2 `}> 
-            <button onClick={() =>  (signOut())} >Log Out </button>
+            <SignOutButton />
+            {/* <button onClick={() =>  (signOut())} >Log Out </button> */}
           </li>
       ) 
 
       const navAuthBtnMobile = !session ? (
-            <li className={`px-7 mx-2 '}`}>
-              <button onClick={() => (router.push('/'))} className='cursor-pointer rounded-md text-left px-3 block w-full py-2 hoverbtn'>Login</button>
+            <li className={`px-5 mx-2 '}`}>
+              <button onClick={() => (router.push('/') , setIsOpen(false)) } className='cursor-pointer rounded-md text-left px-3 block w-full py-2 hoverbtn'>Login</button>
             </li>
         ) : (
-            <li className={'px-6 mx-2'}> 
-              <button onClick={() =>  (signOut(),  router.push('/'))} className='cursor-pointer rounded-md text-left px-2 block w-full py-2 hoverbtn'>   Sign Out </button>
-            </li>
+            <li className={'px-5 mx-2'}> 
+              <SignOutButton className='cursor-pointer rounded-md text-left px-2 block w-full py-2 hoverbtn' />
+              {/* <button onClick={() =>  (signOut(),  router.push('/') , setIsOpen(false))} className='cursor-pointer rounded-md text-left px-2 block w-full py-2 hoverbtn'>   Sign Out </button> */}
+            </li> 
         )
  
  const toggleDarkMode = () => {
@@ -78,14 +81,14 @@ const Header = () => {
             </ul>
             <button> 
               <Image 
-              src={ darkstate ? '/sun.png' : '/moon.png'} alt="Ghost" onClick={toggleDarkMode} width={30} height={30} />
+              src={ darkstate ? '/sun.png' : '/moon.png'} alt="Ghost" priority onClick={toggleDarkMode} width={30} height={30} />
             </button> 
           </div> 
 
           {/* MOBILE VIEW NAVBAR RIGHT*/}
           <div className={`${styles.hamburger}`}>
             <button className='pr-2 transition-all duration-300 hover:scale-[1.05] '>
-              <Image src={ darkstate ? '/sun.png' : '/moon.png'} className='-mt-[35px]' alt="Ghost" onClick={toggleDarkMode} width={30} height={30} />
+              <Image src={ darkstate ? '/sun.png' : '/moon.png'} priority className='-mt-[35px]' alt="Ghost" onClick={toggleDarkMode} width={30} height={30} />
             </button> 
             <button className={` relative z-50 h-[100%]`} onClick={toggleMenu}> 
             <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="40px" fill="var(--text)"><path d="M120-240v-60h720v60H120Zm0-210v-60h720v60H120Zm0-210v-60h720v60H120Z"/></svg>

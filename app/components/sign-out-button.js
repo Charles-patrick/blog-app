@@ -1,8 +1,14 @@
 "use client";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
-export const SignOutButton = () => {
-  const router = useRouter()
-  return <button onClick={() =>  (signOut,  router.push('/'))}>   Sign Out </button>;
+export const SignOutButton = ({ className = "", style = {}, children = "Sign Out" }) => {
+  return (
+    <button
+      className={className}
+      style={style}
+      onClick={() => signOut({ callbackUrl: "/" })}
+    >
+      {children}
+    </button>
+  );
 };
