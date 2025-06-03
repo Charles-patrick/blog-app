@@ -24,7 +24,6 @@ export default async function Home() {
       <div className="p-6 shadow-md rounded-md">
         <h1 className="mb-3 text-center bold">Login to Create Your Blog</h1>
         <div className="mb-3"><SignInButton /></div>
-        {/* Centered "or" above the hr */}
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "-10px" }}>
           <span className="text-center" style={{ background: "var(--bg)", padding: "0 8px" }}>or</span>
         </div>
