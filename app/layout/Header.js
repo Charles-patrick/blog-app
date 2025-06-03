@@ -88,7 +88,7 @@ const Header = () => {
           {/* MOBILE VIEW NAVBAR RIGHT*/}
           <div className={`${styles.hamburger}`}>
             <button className='pr-2 transition-all duration-300 hover:scale-[1.05] '>
-              <Image src={ darkstate ? '/sun.png' : '/moon.png'} priority className='-mt-[35px]' alt="Ghost" onClick={toggleDarkMode} width={30} height={30} />
+              <Image src={ darkstate ? '/sun.png' : '/moon.png'} priority className='-mt-[34px]' alt="Ghost" onClick={toggleDarkMode} width={30} height={30} />
             </button> 
             <button className={` relative z-50 h-[100%]`} onClick={toggleMenu}> 
             <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 -960 960 960" width="40px" fill="var(--text)"><path d="M120-240v-60h720v60H120Zm0-210v-60h720v60H120Zm0-210v-60h720v60H120Z"/></svg>

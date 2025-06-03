@@ -13,10 +13,19 @@ export default function CreatePost() {
   const [image, setImage] = useState('')
   const router = useRouter()
 
-  // If session is loading, show a loading state
+
+  function isValidUrl(value) {
+    try {
+      new URL(value);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+    // If session is loading, show a loading state
   if (status === "loading") {
     return <div className="text-center mt-20">Loading...</div>
-  }
+  } 
 
   // If not authenticated, redirect or show a message
   if (!session || !session.user) {
@@ -29,7 +38,10 @@ export default function CreatePost() {
     if (!title || !content) {
       alert("Title and content are required")
       return
-    } else {
+    } if (image && !isValidUrl(image)){
+      alert("Please enter a valid image URL")
+      return 
+    } else{
       const NewPost = {
         id: Date.now(),
         title: title,
