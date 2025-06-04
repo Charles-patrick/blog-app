@@ -35,7 +35,6 @@ const Header = () => {
       ) : (
           <li className={`px-4 mx-2 `}> 
             <SignOutButton />
-            {/* <button onClick={() =>  (signOut())} >Log Out </button> */}
           </li>
       ) 
 
@@ -75,10 +74,10 @@ const Header = () => {
           <div className={`${styles.navright} `}>
             <ul className='flex align-center justify-center items-center'>
               <li className={`px-4 mx-2 `}><button onClick={() => router.push('/')}  className={`cursor-pointer`}>Blog</button ></li>
-              {/* <li><Authbutton /></li> */}
               { navAuthBtn } 
+              <li className={`px-4 mx-2 `}><button onClick={() => router.push('/createblog')} className={`cursor-pointer`}>Create Blog</button></li>
             </ul>
-            <button> 
+            <button>  
               <Image 
               src={ darkstate ? '/sun.png' : '/moon.png'} alt="Ghost" priority onClick={toggleDarkMode} width={30} height={30} />
             </button> 

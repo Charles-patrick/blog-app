@@ -57,8 +57,8 @@ export default function CreatePost() {
 
   return (
     <div className="max-w-2xl mx-auto mt-18 p-6">
-      <h1 className="text-2xl font-bold mb-6" style={{ color: "var(--text)"}}>
-        Welcome {session.user.name || session.user.email}, Create New Post
+      <h1 className="text-2xl font-bold mb-6 " style={{ color: "var(--text)"}}>
+        Welcome <span className='break-all'>{session.user.name || session.user.email}</span>, Create New Post
       </h1>
       <form className="space-y-4" onSubmit={handleSubmit}>
         <Input
