@@ -5,8 +5,11 @@ import MockData from '../../text'
 import Button from '@/app/components/Button'
 import Input from '@/app/components/Input'
 import { useSession } from 'next-auth/react'
+import { useDarkMode } from '@/app/contexts/DarkModeContext'
+import Image from 'next/image'
 
 export default function CreatePost() {
+  const {darkstate} = useDarkMode
   const { data: session, status } = useSession()
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
@@ -24,7 +27,13 @@ export default function CreatePost() {
   }
     // If session is loading, show a loading state
   if (status === "loading") {
-    return <div className="text-center mt-20">Loading...</div>
+    return <div className="text-center mt-20">
+      {darkstate ? (
+        <Image src='/darkloader.svg' alt='Loading...' width={100} height={100} className="mx-auto my-auto" />
+      ) : (
+        <Image src='/lightloader.svg' alt='Loading...' width={100} height={100} className="mx-auto my-auto" />
+      )}
+    </div>
   } 
 
   // If not authenticated, redirect or show a message
@@ -44,8 +53,8 @@ export default function CreatePost() {
     } else{
       const NewPost = {
         id: Date.now(),
-        title: title,
-        author: session.user.name || 'Anonymous',
+        title: title, 
+        author: session.user.name || session.user.email,
         date: new Date().toLocaleDateString(),
         content: content,
         ...(image && { image: image })

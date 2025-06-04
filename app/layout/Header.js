@@ -7,7 +7,7 @@ import { useDarkMode } from '../contexts/DarkModeContext'
 import { useRouter , usePathname } from 'next/navigation'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
-import { SignOutButton } from '../components/sign-out-button'
+// import { SignOutButton } from '../components/sign-out-button'
 // import { login, logout } from '@/lib/actions/auth'
 
 
@@ -29,12 +29,12 @@ const Header = () => {
   }, [darkstate])
 
       const navAuthBtn = !session ? (
-          <li className={`px-4 mx-2 `}>
+          <li className={`px-4 mx-2 pr-0 `}>
             <button onClick={() => (  router.push('/'))} >Login</button>
           </li>
       ) : (
-          <li className={`px-4 mx-2 `}> 
-            <SignOutButton />
+          <li className={`px-4 mx-2 pr-0 `}> 
+             <button onClick={()=> router.push('/confirmlogout')}> Sign out </button>
           </li>
       ) 
 
@@ -44,7 +44,7 @@ const Header = () => {
             </li>
         ) : (
             <li className={'px-5 mx-2'}> 
-              <SignOutButton className='cursor-pointer rounded-md text-left px-2 block w-full py-2 ' />
+             <button onClick={()=> (router.push('/confirmlogout') , setIsOpen(false))} className='cursor-pointer rounded-md text-left px-3 block w-full py-2'> Sign out </button>
             </li> 
         )
  
@@ -77,7 +77,7 @@ const Header = () => {
               { navAuthBtn } 
               <li className={`px-4 mx-2 `}><button onClick={() => router.push('/createblog')} className={`cursor-pointer`}>Create Blog</button></li>
             </ul>
-            <button>  
+            <button> 
               <Image 
               src={ darkstate ? '/sun.png' : '/moon.png'} alt="Ghost" priority onClick={toggleDarkMode} width={30} height={30} />
             </button> 
