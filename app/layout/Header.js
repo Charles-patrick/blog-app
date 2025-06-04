@@ -41,12 +41,11 @@ const Header = () => {
 
       const navAuthBtnMobile = !session ? (
             <li className={`px-5 mx-2 '}`}>
-              <button onClick={() => (router.push('/') , setIsOpen(false)) } className='cursor-pointer rounded-md text-left px-3 block w-full py-2 hoverbtn'>Login</button>
+              <button onClick={() => (router.push('/') , setIsOpen(false)) } className='cursor-pointer rounded-md text-left px-3 block w-full py-2 '>Login</button>
             </li>
         ) : (
             <li className={'px-5 mx-2'}> 
-              <SignOutButton className='cursor-pointer rounded-md text-left px-2 block w-full py-2 hoverbtn' />
-              {/* <button onClick={() =>  (signOut(),  router.push('/') , setIsOpen(false))} className='cursor-pointer rounded-md text-left px-2 block w-full py-2 hoverbtn'>   Sign Out </button> */}
+              <SignOutButton className='cursor-pointer rounded-md text-left px-2 block w-full py-2 ' />
             </li> 
         )
  
@@ -98,12 +97,10 @@ const Header = () => {
             {isOpen && 
             <div className='fixed top-[56px] left-0 w-[100%] h-[100%] z-10' style={{ backgroundColor: 'var(--bg)' , color: 'var(--text)' }} >
               <ul className='flex flex-col '>
-                <li className='px-7 py-1' ><button onClick={() => { router.push('/'); setIsOpen(false); }} className='cursor-pointer rounded-md text-left px-3 block w-full py-2 hoverbtn'>Blog</button></li>
+                <li className='px-7 py-1'><button onClick={() => { router.push('/'); setIsOpen(false); }} className='cursor-pointer rounded-md text-left px-3 block w-full py-2'>Blog</button></li>
                 {navAuthBtnMobile}
+                <li className='px-6 py-1'><button onClick={() => { router.push('/createblog'); setIsOpen(false); }} className='cursor-pointer rounded-md text-left px-3 block w-full py-2'> Create Blog  </button></li>
               </ul>
-              <div className='px-6 py-2'>
-                
-              </div>
             </div>}
           </div>
         </div>
